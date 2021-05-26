@@ -15,12 +15,21 @@ public class VRGrab : MonoBehaviour
     /// What we are grabbing
     /// </summary>
     public GrabbableObject grabbedObject;
+
+    public float throwForce;
     
     void Start()
     {
         controller = GetComponent<VRinput>();
 
         controller.OnGripDown.AddListener(Grab);
+        controller.OnGripUp.AddListener(Release);
+    }
+
+    private void OnDisable()
+    {
+        controller.OnGripDown.RemoveListener(Grab);
+        controller.OnGripUp.RemoveListener(Release);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,6 +55,24 @@ public class VRGrab : MonoBehaviour
 
     public void Grab()
     {
-        Debug.Log("Grab!");
+        if(hoveredObject != null)
+        {
+            grabbedObject = hoveredObject;
+            grabbedObject.OnGrab(controller);
+        }
+    }
+
+    public void Release()
+    {
+        if(grabbedObject != null)
+        {
+            grabbedObject.OnRelease(controller);
+
+            // throw
+            grabbedObject.rigidBody.velocity = controller.velocity * throwForce;
+            grabbedObject.rigidBody.angularVelocity = controller.velocity * throwForce;
+            
+            grabbedObject = null;
+        }
     }
 }

@@ -16,6 +16,9 @@ public class VRHandAnimator : MonoBehaviour
     
     void Update()
     {
-        
+        if (controller)
+        {
+            handAnimator.Play("Fist Closing", 0, controller.gripValue);
+        }
     }
 }
