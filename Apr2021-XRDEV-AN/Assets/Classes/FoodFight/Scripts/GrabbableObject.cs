@@ -14,6 +14,22 @@ public class GrabbableObject : MonoBehaviour
         objectMaterial = GetComponent<Renderer>().material;
         rigidBody = GetComponent<Rigidbody>();
     }
+
+    public virtual void OnInteraction()
+    {
+
+    }
+
+    public virtual void OnUpdatingInteraction()
+    {
+
+    }
+
+    public virtual void OnStopInteraction()
+    {
+
+    }
+
     public void OnHoverStart()
     {
         objectMaterial.color = hoverColor;
@@ -38,5 +54,7 @@ public class GrabbableObject : MonoBehaviour
         transform.SetParent(null);
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<Rigidbody>().isKinematic = false;
+
+
     }
 }

@@ -59,6 +59,11 @@ public class VRGrab : MonoBehaviour
         {
             grabbedObject = hoveredObject;
             grabbedObject.OnGrab(controller);
+
+            // adding interactions
+            controller.OnTriggerDown.AddListener(grabbedObject.OnInteraction);
+            controller.OnTriggerUpdated.AddListener(grabbedObject.OnUpdatingInteraction);
+            controller.OnTriggerUp.AddListener(grabbedObject.OnStopInteraction);
         }
     }
 
@@ -67,6 +72,11 @@ public class VRGrab : MonoBehaviour
         if(grabbedObject != null)
         {
             grabbedObject.OnRelease(controller);
+
+            // remove interactions
+            controller.OnTriggerDown.RemoveListener(grabbedObject.OnInteraction);
+            controller.OnTriggerUpdated.RemoveListener(grabbedObject.OnUpdatingInteraction);
+            controller.OnTriggerUp.RemoveListener(grabbedObject.OnStopInteraction);
 
             // throw
             grabbedObject.rigidBody.velocity = controller.velocity * throwForce;
