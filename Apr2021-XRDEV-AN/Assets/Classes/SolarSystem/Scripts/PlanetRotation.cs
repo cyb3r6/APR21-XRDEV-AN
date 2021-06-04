@@ -21,6 +21,5 @@ public class PlanetRotation : MonoBehaviour
     void Update()
     {
         transform.Rotate(axisOfRotation * Time.deltaTime * speed);
-
     }
 }
