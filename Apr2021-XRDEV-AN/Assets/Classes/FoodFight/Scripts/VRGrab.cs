@@ -6,6 +6,8 @@ public class VRGrab : MonoBehaviour
 {
     private VRinput controller;
 
+    public bool useADV;
+
     /// <summary>
     /// What we're going to grab
     /// </summary>
@@ -22,14 +24,30 @@ public class VRGrab : MonoBehaviour
     {
         controller = GetComponent<VRinput>();
 
-        controller.OnGripDown.AddListener(Grab);
-        controller.OnGripUp.AddListener(Release);
+        if (useADV)
+        {
+            controller.OnGripDown.AddListener(ADVGrab);
+            controller.OnGripUp.AddListener(ADVRelease);
+        }
+        else
+        {
+            controller.OnGripDown.AddListener(Grab);
+            controller.OnGripUp.AddListener(Release);
+        }
     }
 
     private void OnDisable()
     {
-        controller.OnGripDown.RemoveListener(Grab);
-        controller.OnGripUp.RemoveListener(Release);
+        if (useADV)
+        {
+            controller.OnGripDown.RemoveListener(ADVGrab);
+            controller.OnGripUp.RemoveListener(ADVRelease);
+        }
+        else
+        {
+            controller.OnGripDown.RemoveListener(Grab);
+            controller.OnGripUp.RemoveListener(Release);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -82,6 +100,39 @@ public class VRGrab : MonoBehaviour
             grabbedObject.rigidBody.velocity = controller.velocity * throwForce;
             grabbedObject.rigidBody.angularVelocity = controller.velocity * throwForce;
             
+            grabbedObject = null;
+        }
+    }
+
+    public void ADVGrab()
+    {
+        if (hoveredObject != null)
+        {
+            grabbedObject = hoveredObject;
+            grabbedObject.OnGrabADV(controller);
+
+            // adding interactions
+            controller.OnTriggerDown.AddListener(grabbedObject.OnInteraction);
+            controller.OnTriggerUpdated.AddListener(grabbedObject.OnUpdatingInteraction);
+            controller.OnTriggerUp.AddListener(grabbedObject.OnStopInteraction);
+        }
+    }
+
+    public void ADVRelease()
+    {
+        if (grabbedObject != null)
+        {
+            grabbedObject.OnReleaseADV(controller);
+
+            // remove interactions
+            controller.OnTriggerDown.RemoveListener(grabbedObject.OnInteraction);
+            controller.OnTriggerUpdated.RemoveListener(grabbedObject.OnUpdatingInteraction);
+            controller.OnTriggerUp.RemoveListener(grabbedObject.OnStopInteraction);
+
+            // throw
+            grabbedObject.rigidBody.velocity = controller.velocity * throwForce;
+            grabbedObject.rigidBody.angularVelocity = controller.velocity * throwForce;
+
             grabbedObject = null;
         }
     }

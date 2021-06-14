@@ -11,7 +11,7 @@ public class GrabbableObject : MonoBehaviour
 
     private void Start()
     {
-        objectMaterial = GetComponent<Renderer>().material;
+        objectMaterial = GetComponentInChildren<Renderer>().material;
         rigidBody = GetComponent<Rigidbody>();
     }
 
@@ -40,6 +40,9 @@ public class GrabbableObject : MonoBehaviour
         objectMaterial.color = nonHoverColor;
     }
 
+
+    #region Parenting method of grabbing
+
     public void OnGrab(VRinput hand)
     {
         Debug.Log("Grab!");
@@ -54,7 +57,23 @@ public class GrabbableObject : MonoBehaviour
         transform.SetParent(null);
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<Rigidbody>().isKinematic = false;
-
-
     }
+
+    #endregion
+
+    #region FixedJoint method of grabbing
+
+    public void OnGrabADV(VRinput hand)
+    {
+        FixedJoint fx = hand.gameObject.AddComponent<FixedJoint>();
+        fx.connectedBody = rigidBody;
+    }
+
+    public void OnReleaseADV(VRinput hand)
+    {
+        FixedJoint fx = hand.GetComponent<FixedJoint>();
+        Destroy(fx);
+    }
+
+    #endregion
 }
