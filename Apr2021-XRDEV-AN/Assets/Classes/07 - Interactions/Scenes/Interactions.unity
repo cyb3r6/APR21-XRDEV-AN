@@ -1011,7 +1011,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915297666}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.10717079, y: 1.143, z: 0.726}
+  m_LocalPosition: {x: 0.10717079, y: 1.119, z: 0.854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1424015304}
@@ -1110,7 +1110,7 @@ Transform:
   m_LocalScale: {x: 0.197953, y: 0.197953, z: 0.197953}
   m_Children: []
   m_Father: {fileID: 1339847596}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &921207601
 MeshRenderer:
@@ -1462,7 +1462,7 @@ Transform:
   m_LocalScale: {x: 0.052530378, y: 0.7711542, z: 0.06981874}
   m_Children: []
   m_Father: {fileID: 1339847596}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1271808031
 MeshRenderer:
@@ -1615,8 +1615,8 @@ GameObject:
   - component: {fileID: 1339847596}
   - component: {fileID: 1339847598}
   - component: {fileID: 1339847597}
-  - component: {fileID: 1339847599}
   - component: {fileID: 1339847600}
+  - component: {fileID: 1339847599}
   m_Layer: 0
   m_Name: leverPivot
   m_TagString: Untagged
@@ -1635,8 +1635,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.248, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1271808030}
   - {fileID: 921207600}
+  - {fileID: 1271808030}
   m_Father: {fileID: 835031584}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -1665,8 +1665,8 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: -29.680004
-    max: 28.559708
+    min: -36.23045
+    max: 36.761536
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -1714,12 +1714,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1339847595}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b1e9c79824344a4990c966a28e72e77, type: 3}
+  m_Script: {fileID: 11500000, guid: 1435b93bb33a32847aef07060e0535cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverColor: {r: 1, g: 0.6383666, b: 0, a: 0}
+  hoverColor: {r: 1, g: 0.87289613, b: 0, a: 0}
   nonHoverColor: {r: 0, g: 0, b: 0, a: 0}
   rigidBody: {fileID: 1339847598}
+  leverAngle: 0
+  centerOfMass: {x: 0, y: 0, z: 0}
+  myJoint: {fileID: 1339847597}
 --- !u!1001 &1358696197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1729,7 +1732,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 641310547, guid: c57b54303a526ac4b99bac49b4797793, type: 3}
       propertyPath: m_Radius
-      value: 0.11
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 641310547, guid: c57b54303a526ac4b99bac49b4797793, type: 3}
       propertyPath: m_Enabled
@@ -1791,6 +1794,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: XRRig
       objectReference: {fileID: 0}
+    - target: {fileID: 2640473138759694829, guid: c57b54303a526ac4b99bac49b4797793, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.03
+      objectReference: {fileID: 0}
     - target: {fileID: 2640473138948964664, guid: c57b54303a526ac4b99bac49b4797793, type: 3}
       propertyPath: useADV
       value: 1
@@ -1815,16 +1822,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2640473138358963846, guid: c57b54303a526ac4b99bac49b4797793, type: 3}
   m_PrefabInstance: {fileID: 1358696197}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1358696200 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2640473138948964666, guid: c57b54303a526ac4b99bac49b4797793, type: 3}
-  m_PrefabInstance: {fileID: 1358696197}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1358696201 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2640473138948964669, guid: c57b54303a526ac4b99bac49b4797793, type: 3}
-  m_PrefabInstance: {fileID: 1358696197}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1358696202 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2640473137669843828, guid: c57b54303a526ac4b99bac49b4797793, type: 3}
@@ -1846,20 +1843,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &1358696205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1358696201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14289e8214e5c1546b59ef75384c5b2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xRRig: {fileID: 1358696199}
-  director: {fileID: 1358696200}
 --- !u!114 &1358696206
 MonoBehaviour:
   m_ObjectHideFlags: 0
